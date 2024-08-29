@@ -18,6 +18,8 @@
     name:
       - nvidia-jetpack
     update_cache: true
+  async: 6000
+  poll: 10
 
 - name: Add settings to autoware.env
   ansible.builtin.blockinfile:
