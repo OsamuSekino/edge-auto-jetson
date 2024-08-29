@@ -1,6 +1,4 @@
 # Required
-namespace: edge_auto_jetson
-name: edge_auto_jetson_role
+namespace: autoware
+name: edge_auto_jetson
 version: 0.1.0
-readme: README.md
-authors:
