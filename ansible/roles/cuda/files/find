@@ -1,0 +1,8 @@
+#!/bin/bash
+
+/sbin/find.orig $@
+
+if [ "$1" == "/proc/device-tree/" ]
+then
+    echo "tegra-dummy"
+fi

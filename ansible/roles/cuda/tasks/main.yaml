@@ -1,3 +1,25 @@
+- name: backup find
+  ansible.builtin.shell: |
+    mv /usr/bin/find /usr/bin/find.orig
+- name: wrap find
+  ansible.builtin.copy:
+    src: find
+    dest: /usr/bin/find
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: backup lsmod
+  ansible.builtin.shell: |
+    mv /sbin/lsmod /sbin/lsmod.orig
+- name: wrap lsmod
+  ansible.builtin.copy:
+    src: lsmod
+    dest: /sbin/lsmod
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: Remove NVIDIA Jetpack installation and OpenCV installation
   become: true
   ansible.builtin.apt:
@@ -18,6 +40,13 @@
     name:
       - nvidia-jetpack
     update_cache: true
+
+- name: restore find
+  ansible.builtin.shell: |
+    mv /usr/bin/find.orig /usr/bin/find
+- name: restore lsmod
+  ansible.builtin.shell: |
+    mv /sbin/lsmod.orig /sbin/lsmod
 
 - name: Add settings to autoware.env
   ansible.builtin.blockinfile:
