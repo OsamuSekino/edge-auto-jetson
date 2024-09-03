@@ -16,7 +16,7 @@
   block:
     - name: Define directory name
       set_fact:
-        jetson_script_dir: "/tmp/jetson_scripts"
+        jetson_script_dir: "{{ ansible_env.HOME }}/jetson_scripts"
     - name: Create directory
       ansible.builtin.file:
         path: "{{ jetson_script_dir }}"
@@ -101,6 +101,20 @@
         cmd: make -j7 install
         chdir: "{{ pcl_directory }}/pcl/build"
       become: true
+
+- name: Fix opencv install script1
+  ansible.builtin.replace:
+    path: "{{ opencv_install_script }}"
+    regexp: mkdir opencv
+    replace: mkdir /tmp/opencv
+  become: yes
+
+- name: Fix opencv install script2
+  ansible.builtin.replace:
+    path: "{{ opencv_install_script }}"
+    regexp: cd opencv
+    replace: cd /tmp/opencv
+  become: yes
 
 - name: Install OpenCV
   ansible.builtin.command:
