@@ -1,4 +1,0 @@
-#!/bin/bash
-
-/sbin/lsmod.orig $@
-echo nvgpu
