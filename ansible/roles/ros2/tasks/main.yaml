@@ -16,7 +16,7 @@
   block:
     - name: Define directory name
       set_fact:
-        jetson_script_dir: "{{ ansible_env.HOME }}/jetson_scripts"
+        jetson_script_dir: "/tmp/jetson_scripts"
     - name: Create directory
       ansible.builtin.file:
         path: "{{ jetson_script_dir }}"
