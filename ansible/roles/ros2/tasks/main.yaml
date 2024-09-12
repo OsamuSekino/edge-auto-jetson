@@ -55,27 +55,8 @@
         dest: "{{ ros2_build_script }}"
         mode: u+x
 
-- name: Install dependencies
-  block:
-    - name: Install OpenCV deps
-      ansible.builtin.command:
-        cmd: "{{ opencv_install_deps_script }}"
-    - name: Install PCL deps
-      ansible.builtin.apt:
-        name:
-          - libflann-dev
-          - libvtk7-dev
-        install_recommends: false
-        update_cache: true
-  become: true
-
 - name: Install Boost
   block:
-    - name: Remove existing Boost packages
-      apt:
-        name: libboost-*
-        state: absent
-      ignore_errors: yes
     - name: Define directory name
       set_fact:
         boost_directory: "{{ ansible_env.HOME }}/boost"
@@ -96,6 +77,20 @@
       command: ./b2 install -j7
       args:
         chdir: "{{ boost_directory }}/boost_1_74_0"
+  become: true
+
+- name: Install dependencies
+  block:
+    - name: Install OpenCV deps
+      ansible.builtin.command:
+        cmd: "{{ opencv_install_deps_script }}"
+    - name: Install PCL deps
+      ansible.builtin.apt:
+        name:
+          - libflann-dev
+          - libvtk7-dev
+        install_recommends: false
+        update_cache: true
   become: true
 
 - name: Install PCL
